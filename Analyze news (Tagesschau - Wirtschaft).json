@@ -1,0 +1,141 @@
+{
+  "name": "Analyze news (Tagesschau - Wirtschaft)",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "feedUrl": "https://www.tagesschau.de/wirtschaft/index~rss2.xml"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "4addab18-a253-4b94-8da2-3cb91d435c20",
+      "name": "Receive feed"
+    },
+    {
+      "parameters": {
+        "url": "https://www.tagesschau.de/inland/innenpolitik/afd-merkel-wir-schaffen-das-100.html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c2672815-9a69-4aa3-8f03-34ae6a63791b",
+      "name": "Get news"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "KD3lRSetut0FoKWC",
+          "mode": "list",
+          "cachedResultName": "Analyzer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.data }}",
+            "url": "={{ $('Receive feed').item.json.link }}"
+          },
+          "matchingColumns": [
+            "content"
+          ],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "5b1ca7d3-bed8-4c88-84a4-b6fda32be882",
+      "name": "Analyze content"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Receive feed": {
+      "main": [
+        [
+          {
+            "node": "Get news",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get news": {
+      "main": [
+        [
+          {
+            "node": "Analyze content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "734e9979-be9e-45f6-88d6-4fcde14fb580",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "RvN1etw2Z0fS1Kof",
+  "tags": [
+    {
+      "createdAt": "2025-05-02T10:44:46.218Z",
+      "updatedAt": "2025-05-02T10:44:46.218Z",
+      "id": "EV23fsrQOkvOlSZW",
+      "name": "agent"
+    },
+    {
+      "createdAt": "2025-08-30T14:14:14.948Z",
+      "updatedAt": "2025-08-30T14:14:14.948Z",
+      "id": "igc6zJAsaXLGpcFS",
+      "name": "trading"
+    }
+  ]
+}

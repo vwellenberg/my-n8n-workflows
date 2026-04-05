@@ -1,0 +1,711 @@
+{
+  "name": "Analyze content",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "content"
+            },
+            {
+              "name": "url"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1360,
+        -48
+      ],
+      "id": "e01dc872-bf23-460e-9106-3a583665f5f7",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "chatId": "1157563542",
+        "text": "={{ $json.report }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2016,
+        144
+      ],
+      "id": "52bf7640-6095-4ea1-a2ba-37d4841a14e5",
+      "name": "Notify Vincent",
+      "webhookId": "b0bc9881-7378-4948-8bc0-310168e28438",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Fassen den folgenden Beitrag (Tech-News) so kurz wie möglich zusammen. Idealerweise sollten es maximal drei Sätze sein.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -816,
+        -48
+      ],
+      "id": "f4368725-770e-4b8a-9489-dddb9cb5f456",
+      "name": "Summary",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "8184295153",
+        "text": "={{ $json.report }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2016,
+        352
+      ],
+      "id": "b401afe6-e74b-4178-a760-133ff8df320f",
+      "name": "Notify Lennard",
+      "webhookId": "b0bc9881-7378-4948-8bc0-310168e28438",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Auf einer Skala von 0 bis 10: Wie relevant ist die folgende Nachricht aus technischer KI-Sicht? Gib bitte nur den Score aus (Integer).",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -832,
+        384
+      ],
+      "id": "8228bf9f-319e-4ec2-90da-e9d8a5431685",
+      "name": "AI technical relevance",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e2d35ff-06fa-4d47-834f-85b35d598e2a",
+              "name": "text",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1152,
+        -48
+      ],
+      "id": "6302bcce-cbe7-4884-ad04-9183fd41d81e",
+      "name": "Set input"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Auf einer Skala von 0 bis 10: Wie bedeutend ist die folgende Meldung aus technischer Börsensicht? Gib nur den Score aus (Integer).",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -816,
+        160
+      ],
+      "id": "06494387-6098-452f-bec2-92c67b11061a",
+      "name": "Stock market relevance",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e2d35ff-06fa-4d47-834f-85b35d598e2a",
+              "name": "summary",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -48
+      ],
+      "id": "3cde1af0-390c-4232-a9de-263804e4678f",
+      "name": "Process summary output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "34657342-3a4b-4510-b2b7-5500b0ac781e",
+              "name": "stock_market_relevance",
+              "value": "={{ $json.message.content }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        160
+      ],
+      "id": "da70c158-e93b-440e-8b9f-0f157f78f687",
+      "name": "Process market relevance output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5715af2d-8e6b-448d-83b8-e2a0bc7ac429",
+              "name": "technical_relevance",
+              "value": "={{ $json.message.content }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        384
+      ],
+      "id": "0fca81ec-0cce-4b2f-af83-a2b358a49d85",
+      "name": "Process AI technical relevance output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e2d35ff-06fa-4d47-834f-85b35d598e2a",
+              "name": "report",
+              "value": "=**Date**: {{ $now.toFormat('dd.MM.yyyy') }}\n\n**Title**: {{ $('Set title').item.json.title }}\n\n**GPT-recommended action**\n{{ $json.message.content }}\n\n**Stock market relevance**: {{ $('If relevant').item.json.stock_market_relevance }}/10\n**AI technical relevance** {{ $('If relevant').item.json.technical_relevance }}/10\n\n**Summary**\n{{ $('Merge').item.json.summary }}\n\n**URL**\n{{ $('When Executed by Another Workflow').item.json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "978f6d85-8e44-4b3a-bb23-1567f202b41c",
+              "name": "action_recommendation",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        144
+      ],
+      "id": "a69d780f-11b4-485a-8b77-6656f7df4bec",
+      "name": "Prepare report"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        144
+      ],
+      "id": "6fdb4b3f-ba8f-4470-a809-302fb248a881",
+      "name": "Merge",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9f397997-3103-4c8b-8918-ec6a81b33395",
+              "leftValue": "={{ $json.stock_market_relevance }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "f5bef25c-ac76-40f8-a78a-29b4f6e4a85b",
+              "leftValue": "={{ $json.technical_relevance }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        160
+      ],
+      "id": "5ba766b9-91c0-45a3-ae8c-2260cb4b1548",
+      "name": "If relevant",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Denke dir einen kurzen Titel zu diesem Text aus:",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        432,
+        144
+      ],
+      "id": "e8fd13b4-1ba6-4f02-b151-1ea7ec68a410",
+      "name": "Create title",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "866af4db-8187-42f9-aaa4-838ea7c80cb3",
+              "leftValue": "={{ $('Merge').item.json.stock_market_relevance }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1696,
+        352
+      ],
+      "id": "7492bab6-865f-4d84-9f9e-e77ee47c3655",
+      "name": "Only stock market"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Du bist Aktien-Experte. Formuliere eine einfache und möglichst kurze Handlungsempfehlung ... z.B. Kauf, Verkauf, Hebeln etc.\n\n## Policy\n\n- am besten maximal drei Sätze",
+              "role": "system"
+            },
+            {
+              "content": "={{ $('Process summary output').item.json.summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1024,
+        144
+      ],
+      "id": "0e35f1d5-9e5d-4144-9842-05564fb7b82d",
+      "name": "Recommend action",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be8f22e6-f0b2-4ce0-94c7-7152535ec107",
+              "name": "title",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        144
+      ],
+      "id": "3082b09d-d9fe-44a6-92c0-89931e1e852f",
+      "name": "Set title"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "content": "Donald Trump ruft die republikanischen Abgeordneten im Repräsentantenhaus auf, morgen geschlossen für einen 'clean temporary funding bill' (sauberen vorläufigen Finanzierungs- bzw. Haushaltsentwurf) zu stimmen. Er behauptet, der demokratische Führer Chuck Schumer wolle die Regierung schließen, während die Republikaner die Regierung offen halten wollen, und fordert: Einigt euch und stimmt JA.",
+          "url": "www.test.de"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Set input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summary": {
+      "main": [
+        [
+          {
+            "node": "Process summary output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI technical relevance": {
+      "main": [
+        [
+          {
+            "node": "Process AI technical relevance output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set input": {
+      "main": [
+        [
+          {
+            "node": "Summary",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Stock market relevance",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI technical relevance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stock market relevance": {
+      "main": [
+        [
+          {
+            "node": "Process market relevance output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process summary output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process market relevance output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Process AI technical relevance output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Prepare report": {
+      "main": [
+        [
+          {
+            "node": "Notify Vincent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Only stock market",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If relevant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If relevant": {
+      "main": [
+        [
+          {
+            "node": "Create title",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Create title": {
+      "main": [
+        [
+          {
+            "node": "Set title",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only stock market": {
+      "main": [
+        [
+          {
+            "node": "Notify Lennard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recommend action": {
+      "main": [
+        [
+          {
+            "node": "Prepare report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set title": {
+      "main": [
+        [
+          {
+            "node": "Recommend action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7cd4a76f-bca8-446f-850b-7b5c82a85df3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "KD3lRSetut0FoKWC",
+  "tags": [
+    {
+      "createdAt": "2025-05-02T10:44:46.218Z",
+      "updatedAt": "2025-05-02T10:44:46.218Z",
+      "id": "EV23fsrQOkvOlSZW",
+      "name": "agent"
+    },
+    {
+      "createdAt": "2025-08-30T14:14:14.948Z",
+      "updatedAt": "2025-08-30T14:14:14.948Z",
+      "id": "igc6zJAsaXLGpcFS",
+      "name": "trading"
+    }
+  ]
+}

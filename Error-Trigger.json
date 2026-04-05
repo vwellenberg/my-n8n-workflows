@@ -1,0 +1,109 @@
+{
+  "name": "Error-Trigger",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "78d31187-1e36-447f-9fa2-4e5d2f109c41",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "1157563542",
+        "text": "=Error handling\n\n{{ $json.workflow.name }} - {{ $json.execution.error.message }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        0
+      ],
+      "id": "664b7645-e566-4278-9128-9532e93fcbe8",
+      "name": "Notify Vincent",
+      "webhookId": "9de011cc-be28-48b1-b902-9dfd902c21b9",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f1d9195e-cd3f-46fb-87b8-4d538340cbfb",
+              "leftValue": "={{ $json.workflow.name }}",
+              "rightValue": "Trump",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "efc72a74-a0ff-454e-b096-e2ac1262dc25",
+      "name": "Filter"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Notify Vincent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "086abb3d-178a-4734-bcba-6837fd10376c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "dIL3KF4vbuXzcuxU",
+  "tags": []
+}

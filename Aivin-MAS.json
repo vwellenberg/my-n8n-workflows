@@ -1,0 +1,1927 @@
+{
+  "name": "Aivin-MAS",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "gl": "de",
+          "hl": "de"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        80
+      ],
+      "id": "3ccd1479-0a30-4afc-8724-c328bdee2ef8",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "KVfDAq9gL7PvMTsE",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4288,
+        -48
+      ],
+      "id": "d4f8b124-38b0-4aca-810f-d4939b8a5012",
+      "name": "Telegram",
+      "webhookId": "9c76a980-a6c9-4551-a632-a9e3f79ac295",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "task": "MDIxMTg4NTAzNjU1MTE1MDU1NjU6MDow",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "additionalFields": {
+          "completed": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Completion_Date', ``, 'string') }}",
+          "dueDate": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Due_Date', ``, 'string') }}",
+          "notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        624,
+        80
+      ],
+      "id": "43545ef5-9b7b-41c7-b042-801cabc7e470",
+      "name": "Google Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "hyRCiY9nidx04wi9",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Alpha Vantage-HTTP-Request, um Aktienkurse abzufragen (durch Angabe des entsprechenden Symbols)",
+        "url": "https://www.alphavantage.co/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "function",
+              "valueProvider": "fieldValue",
+              "value": "GLOBAL_QUOTE"
+            },
+            {
+              "name": "symbol"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        80
+      ],
+      "id": "2ae8d5f7-2655-4b68-bdec-c8b1c01995a0",
+      "name": "AlphaVantage Aktienkurse by symbol",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "9sqmGmSM2qnkFukQ",
+          "name": "Alpha Vantage (gmail)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Abfrage der Kurse vom Activity Fellbach (Fitness-Studio Fellbach). Die Kurszeiten sind nicht MEZ/MESZ. Rechne diese entsprechend für Berlin um. \n",
+        "method": "PUT",
+        "url": "https://mccff61e24ade5d.clubkonzepte24.de:33929/booking/kursplan/week",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "Accept",
+              "valueProvider": "fieldValue",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "Accept-Language",
+              "valueProvider": "fieldValue",
+              "value": "de-DE,de;q=0.5"
+            },
+            {
+              "name": "ClubId",
+              "valueProvider": "fieldValue",
+              "value": "5559edc5-8f47-44d5-9e94-e8e9033d12d4"
+            },
+            {
+              "name": "Connection",
+              "valueProvider": "fieldValue",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Content-Type",
+              "valueProvider": "fieldValue",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "name": "sid",
+              "valueProvider": "fieldValue",
+              "value": "65d82d4e-d231-4c09-8e71-959256deae44"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"Start\": \"{start}\",\n  \"Ende\": \"{end}\",\n  \"Id\": \"b0400153-7e67-4fc6-acce-7abcd423ba2d\",\n  \"CheckBuchbareKurse\": false,\n  \"AnzahlWochenZumPruefen\": null\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "start",
+              "description": "Startdatum für die Suche im Kalender des Fitnessstudio Fellbachs.",
+              "type": "string"
+            },
+            {
+              "name": "end",
+              "description": "Enddatum für die Suche im Kalender des Fitnessstudio Fellbachs.",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        80
+      ],
+      "id": "fdfeb32f-33fb-4ad1-81f1-152ae70afedd",
+      "name": "ActivityFellbach Fitnessstudio Kurse"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Eventabfrage für meinen Google-Kalender, namens \"n8n\"",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "faef7adcc23c5fb5db45f776773ab6fc7ac0df4a53f275de5086842318e0878b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {
+          "timeZone": {
+            "__rl": true,
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Timezone', ``, 'string') }}",
+            "mode": "id",
+            "__regex": "([-+/_a-zA-Z0-9]*)"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        80
+      ],
+      "id": "a7815a75-b072-41b1-b85b-d3fd515f5d54",
+      "name": "Google Calendar n8n",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZAXlW3765B8guO2t",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Eventabfrage für meinen Google-Kalender, namens \"n8n\"",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "vwellenberg@googlemail.com",
+          "mode": "list",
+          "cachedResultName": "vwellenberg@googlemail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {
+          "timeZone": {
+            "__rl": true,
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Timezone', ``, 'string') }}",
+            "mode": "id",
+            "__regex": "([-+/_a-zA-Z0-9]*)"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -400,
+        80
+      ],
+      "id": "c386ebe2-ad07-416c-844f-ec980b629023",
+      "name": "Google Calendar VW",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZAXlW3765B8guO2t",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Lesen, aktualisieren und schreiben von Schnellnotizen des Benutzers in Google Sheets. \nHinweis: Schnellnotizen müssen einzeln erstellt werden, es kann also nur eine Notiz pro Funktionsaufruf erstellt werden!",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ELv2n6RFfemcVLDHNNrX9LGsTrAIEvZNf3hiKBQCo0k",
+          "mode": "list",
+          "cachedResultName": "QuickNotes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ELv2n6RFfemcVLDHNNrX9LGsTrAIEvZNf3hiKBQCo0k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Tabellenblatt1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ELv2n6RFfemcVLDHNNrX9LGsTrAIEvZNf3hiKBQCo0k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('timestamp', `Der Timestamp zum Schnellnotiz-Eintrag. Ziel-Zeitzone: Berlin; Format: DD.MM.YYYYTHH:mm`, 'string') }}",
+            "note": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('note', `Der Text der Schnellnotiz, der abgespeichert werden soll.`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "note",
+              "displayName": "note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        848,
+        384
+      ],
+      "id": "9b362bd0-531b-403d-b0eb-4839c53d3ef3",
+      "name": "Google Sheets Quick Notes",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tUU0vDB2s4qzrwMH",
+          "name": "Google Sheets account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "fields": [
+          "names",
+          "emailAddresses",
+          "phoneNumbers"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleContactsTool",
+      "typeVersion": 1,
+      "position": [
+        912,
+        80
+      ],
+      "id": "b39174e8-2664-4600-8a06-6c0faa8d41d1",
+      "name": "Google Contacts",
+      "notesInFlow": false,
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "WVosjOn5swyHX71J",
+          "name": "Google Contacts account"
+        }
+      },
+      "notes": "Hinweis: Es ex. eine Google People API und Contacts API. Die People API wird gebraucht!"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "02298bf6-468d-4b25-b9ff-7b82bfd3c418"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "614aadde-07e0-425b-a1cd-384f69475ea2",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -528,
+        -144
+      ],
+      "id": "c74352e6-7284-447f-a942-0365e7aeb51d",
+      "name": "Switch",
+      "notesInFlow": true,
+      "notes": "Route Message Type"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        -400
+      ],
+      "id": "b4781272-0616-4edb-a90c-e59024be9fbf",
+      "name": "Telegram1",
+      "webhookId": "046fa9cc-416e-426a-bccb-c6b8a8b811ae",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Zeige dem Nutzer an, dass getippt wird, damit er weiß, dass etwas passiert.",
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        2400,
+        80
+      ],
+      "id": "2769515d-9e2e-46ea-9d0a-7486bf22b3f3",
+      "name": "Telegram typing indiator",
+      "webhookId": "b0cf2949-53ae-4e70-af99-6a88285ff733",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Command', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.executeCommandTool",
+      "typeVersion": 1,
+      "position": [
+        2528,
+        80
+      ],
+      "id": "77b26e88-2f81-4610-a3e6-127adcffae56",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Löst einen Anruf eines ElevenLabs-Voice-Agents aus. \"to_number\" ist die Telefonnummer, die angerufen werden soll. \"tasks\" soll die Aufgabe(n) für den Anruf enthalten.",
+        "method": "POST",
+        "url": "https://api.elevenlabs.io/v1/convai/twilio/outbound_call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"agent_id\": \"PxurrCsmYPeij5tyfoIE\",\n  \"agent_phone_number_id\": \"qA8fWxbYnhnbkj1MdDhQ\",\n  \"to_number\": \"{to_number}\",\n  \"from\": \"+491629679187\",\n  \"conversation_initiation_client_data\": {\n    \"dynamic_variables\": {\n      \"tasks\": \"{tasks}\",    \n      \"timestamp\": \"{{new Date().toISOString()}}\",\n      \"secret\": \"Käsetoast\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2512,
+        288
+      ],
+      "id": "c78805cc-be47-4f17-b7ff-89feea4ff335",
+      "name": "ElevenLabs outbound call",
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "LL6qhEbdj1Wf4HF1",
+          "name": "ElevenLabs"
+        }
+      },
+      "notes": "https://elevenlabs.io/docs/conversational-ai/api-reference/twilio/outbound-call?explorer=true"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Aktualisiert den ElevenLabs-Voice-Agent, um seine Aufgabe(n) festzulegen. Falls es mehrere Aufgaben sind, gib diese kurz und knapp als Liste an.",
+        "method": "PATCH",
+        "url": "https://api.elevenlabs.io/v1/convai/agents/PxurrCsmYPeij5tyfoIE",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"conversation_config\": {\n        \"agent\": {\n            \"prompt\": {\n                \"prompt\": \"Dein Name ist Aivin. Mein Name ist Vincent Wellenberg. Du bist Vincents persönlicher KI-Assistent. Dies ist das aktuelle Datum: {{system__time_utc}}. Du redest im Normalfall nicht direkt mit mir (Vincent), sondern mit einer anderen Person. Du sollst eine oder mehrere Aufgabe (Tasks) innerhalb dieses Gesprächs erfüllen. ## Tasks / Aufgaben - {aufgaben} ## Policy - Sei freundschaftlich, informell. Duze. - Frage nur zum vermeintlichen Ende des Gesprächs nach, ob der Nutzer noch etwas braucht. - Versuche möglichst menschlich zu sein. - Fasse dich kurz. - Gehe initial davon aus, dass du zunächst mit einer anderen Person als mir (Vincent) sprichst. - Falls du Aufgaben hast, versuche diese recht zügig abzuarbeiten. Beachte, dass in der Interaktion dennoch zwischen den Aufgaben hin- und hergesprungen werden könnte. - Du sprichst immer auf Deutsch. - Falls der Nutzer nichts mehr braucht, beende das Gespräch.\"\n            }\n        }\n    }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2768,
+        80
+      ],
+      "id": "35768866-4209-4069-9910-ed1f3fd44a66",
+      "name": "ElevenLabs update agent",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "LL6qhEbdj1Wf4HF1",
+          "name": "ElevenLabs"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "toolDescription": "HTTP-Request, um Infos über den Voice-Agenten zu erhalten.",
+        "url": "=https://api.elevenlabs.io/v1/convai/agents/PxurrCsmYPeij5tyfoIE",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2880,
+        80
+      ],
+      "id": "2445a023-d7db-4cb3-9015-12a0d1762812",
+      "name": "ElevenLabs get agent",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "LL6qhEbdj1Wf4HF1",
+          "name": "ElevenLabs"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $json.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -608,
+        -400
+      ],
+      "id": "5e53d981-a98e-47b2-a410-344b38996201",
+      "name": "Telegram typing indicator",
+      "webhookId": "ed81906f-f73e-4672-b530-037ce25edf28",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "input": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        4288,
+        -256
+      ],
+      "id": "39765cdd-9bf0-4cbf-b888-6707ad8d92d3",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "Y6hSU3G6J5UQa5GQ",
+          "name": "OpenAi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4512,
+        -256
+      ],
+      "id": "8d0ceb4a-00db-44e6-99ab-7035be560625",
+      "name": "Telegram2",
+      "webhookId": "99defa4e-a950-416f-ba5c-41e608935cfe",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        3008,
+        80
+      ],
+      "id": "ebdbf489-cd96-417a-ba74-d3c102479533",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tUU0vDB2s4qzrwMH",
+          "name": "Google Sheets account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mongoDbTool",
+      "typeVersion": 1.1,
+      "position": [
+        -896,
+        -736
+      ],
+      "id": "3a45c556-703e-434e-a26a-d5d5c9f6c351",
+      "name": "MongoDB",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Frage alle Jira-Tasks ab.",
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        3248,
+        80
+      ],
+      "id": "d39359c0-221b-4d78-9e81-266b044d0ca8",
+      "name": "Jira Get Tasks",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "YoFhmDFRrtSlMQWH",
+          "name": "Jira SW Cloud account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Aktualisiere einen Jira-Task (bestimmt durch seinen Key).",
+        "operation": "update",
+        "issueKey": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Issue_Key', `Der Key für den Zugriff auf den Task (bzw. Issue)`, 'string') }}",
+        "updateFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Die Beschreibung des Tasks`, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Tasks`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        80
+      ],
+      "id": "9a70076e-4615-4866-97f7-15a3ffb6a9be",
+      "name": "Jira Update Task",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "YoFhmDFRrtSlMQWH",
+          "name": "Jira SW Cloud account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Erstelle einen Jira-Task.",
+        "project": {
+          "__rl": true,
+          "value": "10000",
+          "mode": "id"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10001",
+          "mode": "list",
+          "cachedResultName": "Task"
+        },
+        "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Tasks`, 'string') }}",
+        "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Die Beschreoibung des Tasks`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        3488,
+        80
+      ],
+      "id": "b54f80fe-f79e-4a0f-92da-8038a5dc8c0a",
+      "name": "Jira Task erstellen",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "YoFhmDFRrtSlMQWH",
+          "name": "Jira SW Cloud account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "Call_Clownbot",
+        "description": "Rufe dieses Tool auf, um einen Witz vom Clownbot inklusive melancholischem Kommentar zu erhalten. Ihm muss eine Aufforderung zu einem Witz mitgegeben werden. Gib die vollständige Antwort vom Clownbot wider.",
+        "workflowId": {
+          "__rl": true,
+          "value": "mO9iQnov7w08on69",
+          "mode": "list",
+          "cachedResultName": "Clownbot"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        3728,
+        80
+      ],
+      "id": "f491c265-bc0a-489b-be55-e6ba28ba1314",
+      "name": "Call Clownbot",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "20250512-PostgresChatMemory",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3984,
+        80
+      ],
+      "id": "9fa5fe0e-0624-4f89-93ea-774c13c2a859",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "YgZzXzMmX7HqCohx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Gmail-Tool, um Mails zu versenden. HTML-Formatierung ist immer mit anzugeben!",
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `\nDies ist die eigentliche E-Mail-Nachricht, bei welcher allerdings auch die html-Tags hinzugefügt werden müssen, damit die Nachricht vernünftig formatiert ist.\n\nPolicy: \n- Falls du Freunden oder Familie von mir schreibst, erwähne, dass die Mail von dir, Aivin, Vincent Wellenbergs KI-Agenten, ist. \n- Mails werden immer mit html-Tags formatiert\n\nBeispiel:\n\n<p>Hallo Felix,</p>\n\n<p>ich hoffe, es geht dir gut.</p>\n\n<p>Herzliche Grüße<br>Vincent & dein Assistent Aivin ❤️</p>`, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        528,
+        432
+      ],
+      "id": "e0d0891e-e9a9-4354-9eb6-3a50e3d4e9b0",
+      "name": "gmail_send",
+      "webhookId": "d33ba978-4598-42d5-aba6-e8195db95cb4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lshg5dzlyN3TzU34",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Rufe bis zu 50 der letzten Mails von Gmail auf. ",
+        "operation": "getAll",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        432
+      ],
+      "id": "de79f71e-a4f8-4541-a45a-e516335e4821",
+      "name": "gmail_last_50_mails",
+      "webhookId": "15b80e08-59ae-428e-afca-b7f0501144b5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lshg5dzlyN3TzU34",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "call_jira_bot",
+        "description": "Rufe dieses Tool auf, um den Jira-Bot damit zu beauftragen das Jira-Kanban-Board von Vincent zu verwalten. Also z.B. Jira-Issues (Tasks) zu erstellen oder zu ändern. Der Jira-Bot meldet sich dann direkt bei Vincent zurück. ",
+        "workflowId": {
+          "__rl": true,
+          "value": "vL1nspvqYmlyQPe6",
+          "mode": "list",
+          "cachedResultName": "Jira-Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat-id": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+            "instruction": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('instruction', `Die Anweisung für den Jira-Agent, was er zu tun hat. `, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "instruction",
+              "displayName": "instruction",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "chat-id",
+              "displayName": "chat-id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        2688,
+        304
+      ],
+      "id": "1d928a12-8160-45db-a768-34c61bd0dbf2",
+      "name": "call_jira_bot"
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_qlM0DR1UWH1XoCRRY6HNx3Wj",
+          "mode": "list",
+          "cachedResultName": "aivin-n8n"
+        },
+        "prompt": "define",
+        "text": "={{ $now }}: {{  $json.normalizedText }}",
+        "options": {
+          "preserveOriginalTools": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2512,
+        -144
+      ],
+      "id": "66ea7632-28ec-4274-8490-a25ccc9ba388",
+      "name": "OpenAI-Assistent: Aivin (Main-Agent)",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      },
+      "notes": "old thread: thread_xDyzB56KAAEoUUcFXUDzekxA"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -16,
+        -400
+      ],
+      "id": "6f7b9d79-79e5-4b08-bf8e-4ff8c5344b65",
+      "name": "Transcription",
+      "credentials": {
+        "openAiApi": {
+          "id": "Y6hSU3G6J5UQa5GQ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_4n3PbmjNoSszREgn5TaDsvtF",
+          "mode": "list",
+          "cachedResultName": "transcription-refiner-n8n"
+        },
+        "prompt": "define",
+        "text": "={{ $json.text }}",
+        "memory": "threadId",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        640,
+        -400
+      ],
+      "id": "fa1bba65-9946-4d1f-b743-653c72141a7d",
+      "name": "Transcription-Refiner",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "userIds": "=1157563542"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1168,
+        -144
+      ],
+      "id": "63e500a7-69db-48f0-a289-969ce94d243d",
+      "name": "Telegram Trigger",
+      "webhookId": "38358653-109c-4d2e-80e3-fa0446766f51",
+      "notesInFlow": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      },
+      "notes": "User Message"
+    },
+    {
+      "parameters": {
+        "name": "Call_Subagent",
+        "description": "Rufe dieses Tool auf, um eine zweite Meinung einzuholen (Gemini 2.5 Pro)",
+        "workflowId": {
+          "__rl": true,
+          "value": "NrBCueVsLruLenVK",
+          "mode": "list",
+          "cachedResultName": "Subagent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        3120,
+        80
+      ],
+      "id": "1f28d987-eb39-4ff0-9176-9102946fb3cf",
+      "name": "Call Gemini 2.5 Pro",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "faef7adcc23c5fb5db45f776773ab6fc7ac0df4a53f275de5086842318e0878b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        80
+      ],
+      "id": "9919dca8-2c98-4499-8c0f-b86df5ea8e16",
+      "name": "update_google_calendar_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZAXlW3765B8guO2t",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "faef7adcc23c5fb5db45f776773ab6fc7ac0df4a53f275de5086842318e0878b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Startzeitpunkt des Events. - immer für Zeitzone Berlin angeben!`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Endzeitpunkt des Events. - immer für Zeitzone Berlin angeben!`, 'string') }}",
+        "additionalFields": {
+          "allday": "no",
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Die Beschreiobing des Termins.`, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Termins.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        80
+      ],
+      "id": "04bb2242-5f34-47a6-85f1-0ee86e5c2f2e",
+      "name": "create_google_calendar_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZAXlW3765B8guO2t",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Erstellt via Google Calendar API einen ganztägigen Termin. ",
+        "calendar": {
+          "__rl": true,
+          "value": "faef7adcc23c5fb5db45f776773ab6fc7ac0df4a53f275de5086842318e0878b@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Startzeitpunkt des Events. - immer für Zeitzone Berlin angeben!`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Endzeitpunkt des Events. - immer für Zeitzone Berlin angeben!`, 'string') }}",
+        "additionalFields": {
+          "allday": "yes",
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `Die Beschreiobing des Termins.`, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `Der Titel des Termins.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        80
+      ],
+      "id": "5664b223-5aab-4209-9f2c-36c1e336f816",
+      "name": "create_google_calendar_event_all_day",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZAXlW3765B8guO2t",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=💬 {{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1760,
+        -400
+      ],
+      "id": "5e97d2d4-705e-4d24-9460-f715eeab64e6",
+      "name": "Send refined transcription",
+      "webhookId": "9c76a980-a6c9-4551-a632-a9e3f79ac295",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Raw transcription: {{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        -656
+      ],
+      "id": "bd8e7616-11c7-40dd-8ad1-cb62e5621dea",
+      "name": "Send raw transcription",
+      "webhookId": "9c76a980-a6c9-4551-a632-a9e3f79ac295",
+      "credentials": {
+        "telegramApi": {
+          "id": "s7tlmrEu6vB9tGrH",
+          "name": "Telegram account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "04ab72ce-f538-45e0-bcd6-48fc12074b83",
+              "name": "normalizedText",
+              "value": "={{ $json.output || $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -144
+      ],
+      "id": "d4b7f431-eb5e-4212-9c98-79e30dc36f7d",
+      "name": "normalize",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "Tools",
+        "height": 520,
+        "width": 4540
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        64
+      ],
+      "id": "3ac7cd1d-3705-4b26-b7df-1971bbbaf160",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Transcription",
+        "height": 300,
+        "width": 2260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -480
+      ],
+      "id": "01eaf013-cb93-41ed-9f8b-a048ba980633",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Audio-Gen",
+        "height": 260,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4224,
+        -320
+      ],
+      "id": "bee5fe0b-8f35-493e-a214-09d70bca8041",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1552,
+        -144
+      ],
+      "id": "a6514f72-25e3-41be-bfb2-4734e8ba4d78",
+      "name": "Merge inputs",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "toolDescription": "Alpha Vantage-HTTP-Request, um eine vollständige Liste aller unterstützten Symbole abzurufen. Diese Liste enthält Informationen wie das Symbol, den Firmennamen, die Börse, den Asset-Typ (z. B. Stock oder ETF), das IPO-Datum und den Status (aktiv oder delisted). Hier muss nichts mit übergeben werden.",
+        "url": "https://www.alphavantage.co/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "function",
+              "valueProvider": "fieldValue",
+              "value": "LISTING_STATUS"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2000,
+        512
+      ],
+      "id": "2a8a3ead-f9e1-4239-b572-029372e78c92",
+      "name": "listing_view_alpha_vantage",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "rNX2Rqwenq8Nxcvg",
+          "name": "Alpha Vantage (hotmail)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Alpha Vantage-HTTP-Request, um grundlegende Unternehmensdaten (function OVERVIEW), wie mitunter z.B. den KGV abzurufen (durch Angabe des entsprechenden Symbols)",
+        "url": "https://www.alphavantage.co/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "function",
+              "valueProvider": "fieldValue",
+              "value": "OVERVIEW"
+            },
+            {
+              "name": "symbol"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        2128,
+        288
+      ],
+      "id": "13cb8a6e-7e36-4d52-845a-429f8f04c20f",
+      "name": "overview_by_symbol_alpha_ventage",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "9sqmGmSM2qnkFukQ",
+          "name": "Alpha Vantage (gmail)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Alpha Vantage-HTTP-Request, um Indikatoren zu einem Unternehmen abzufragen. Hierzu muss ein entsprechendes Symbol und die \"function\" für den jeweiligen Indikator angegeben werden. Mögliche Indikatoren sind z.B.:\n- SMA – Simple Moving Average\n- EMA – Exponential Moving Average\n- RSI – Relative Strength Index\n- MACD – Moving Average Convergence Divergence\n- BBANDS – Bollinger Bands\n- STOCH – Stochastic Oscillator",
+        "url": "https://www.alphavantage.co/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "function"
+            },
+            {
+              "name": "symbol"
+            },
+            {
+              "name": "interval",
+              "valueProvider": "fieldValue",
+              "value": "daily"
+            },
+            {
+              "name": "time_period",
+              "valueProvider": "fieldValue",
+              "value": "daily"
+            },
+            {
+              "name": "series_type",
+              "valueProvider": "fieldValue",
+              "value": "close"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1904,
+        288
+      ],
+      "id": "4a694448-83f8-4766-8c7e-578a336a65d7",
+      "name": "indicator_alpha_ventage",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "9sqmGmSM2qnkFukQ",
+          "name": "Alpha Vantage (gmail)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "This API returns the annual and quarterly EPS and revenue estimates for the company of interest, along with analyst count and revision history.",
+        "url": "https://www.alphavantage.co/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "function",
+              "valueProvider": "fieldValue",
+              "value": "EARNINGS_ESTIMATES"
+            },
+            {
+              "name": "symbol"
+            },
+            {
+              "name": "interval",
+              "valueProvider": "fieldValue",
+              "value": "daily"
+            },
+            {
+              "name": "time_period",
+              "valueProvider": "fieldValue",
+              "value": "daily"
+            },
+            {
+              "name": "series_type",
+              "valueProvider": "fieldValue",
+              "value": "close"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1712,
+        288
+      ],
+      "id": "25da682e-8f79-4219-88f5-d032f8108b39",
+      "name": "earnings_estimates_alpha_ventage",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "MYDIoznJjyqtxU6H",
+          "name": "Alpha Vantage (hokusai)"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AlphaVantage Aktienkurse by symbol": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ActivityFellbach Fitnessstudio Kurse": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar n8n": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar VW": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Quick Notes": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Contacts": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge inputs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "Transcription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram typing indiator": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs outbound call": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs update agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs get agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jira Get Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jira Update Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jira Task erstellen": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Clownbot": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gmail_send": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gmail_last_50_mails": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "call_jira_bot": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI-Assistent: Aivin (Main-Agent)": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcription": {
+      "main": [
+        [
+          {
+            "node": "Transcription-Refiner",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send raw transcription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcription-Refiner": {
+      "main": [
+        [
+          {
+            "node": "Send refined transcription",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge inputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram typing indicator",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Gemini 2.5 Pro": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_google_calendar_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_google_calendar_event_all_day": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_google_calendar_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send refined transcription": {
+      "main": [
+        []
+      ]
+    },
+    "normalize": {
+      "main": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge inputs": {
+      "main": [
+        [
+          {
+            "node": "normalize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "listing_view_alpha_vantage": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "overview_by_symbol_alpha_ventage": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "indicator_alpha_ventage": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "earnings_estimates_alpha_ventage": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpenAI-Assistent: Aivin (Main-Agent)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Berlin",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "dIL3KF4vbuXzcuxU",
+    "availableInMCP": false,
+    "timeSavedPerExecution": 3
+  },
+  "versionId": "b48d661e-809d-40c3-9742-edaabe06c5f8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "xt9QEgRGOjJcoHPt",
+  "tags": [
+    {
+      "createdAt": "2025-05-02T10:44:37.935Z",
+      "updatedAt": "2025-05-02T10:44:37.935Z",
+      "id": "n7MPkFAzLJ1HK1mM",
+      "name": "assistant"
+    },
+    {
+      "createdAt": "2025-05-02T10:44:46.218Z",
+      "updatedAt": "2025-05-02T10:44:46.218Z",
+      "id": "EV23fsrQOkvOlSZW",
+      "name": "agent"
+    },
+    {
+      "createdAt": "2025-05-02T10:44:47.782Z",
+      "updatedAt": "2025-05-02T10:44:47.782Z",
+      "id": "4awBIt6bei7F2H82",
+      "name": "telegram"
+    },
+    {
+      "createdAt": "2025-05-02T10:44:50.206Z",
+      "updatedAt": "2025-05-02T10:44:50.206Z",
+      "id": "DnxoX8c0AZGfME7o",
+      "name": "tools"
+    }
+  ]
+}

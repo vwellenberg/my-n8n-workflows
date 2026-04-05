@@ -1,0 +1,344 @@
+{
+  "name": "Watch Trump posts",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "feedUrl": "https://trumpstruth.org/feed"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -160
+      ],
+      "id": "fa98bfd4-5e73-4432-a733-6fca65b1d2f2",
+      "name": "Receive Trump post (Truth Social)"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -48,
+        -64
+      ],
+      "id": "86d017d4-ed93-47d4-a4ea-e5b4d869dd6c",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "=https://truthsocial.com/api/v1/accounts/verify_credentials",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-encoding",
+              "value": "gzip, deflate, br, zstd"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "authorization",
+              "value": " Bearer 6dESv2ey6RW0wO8shc7dvsv8AYSe9v4uuOPFcEtIGmc"
+            },
+            {
+              "name": "baggage",
+              "value": "sentry-environment=production,sentry-release=7794857f036d24447c57abf2b46f6ed59cca33b1,sentry-public_key=341951a6e21a4c929c321aa2720401f5,sentry-trace_id=56bd70e06f934b6cbe7a849fb68fb066"
+            },
+            {
+              "name": "browser",
+              "value": "Chrome"
+            },
+            {
+              "name": "Cookie",
+              "value": " _cfuvid=TO7PatHwhAlnVsOrNAW_V0LBLORXXlotQIAfM9SZvyI-1756562066977-0.0.1.1-604800000; __cflb=0H28vTPqhjwKvpvovP7uB2bKEYha7QdoWvQktSDdHc3; __cf_bm=zFxhxXRiRrQteaXqgq.LTjY4zHxoypA8b2w3ncnHgdU-1756628331-1.0.1.1-Nqy8HaOA_rQO5gPgM2N9r2CR1k8QpY2IWKFUyl8zaR68Rc.I6caEyWC7MtsXX2GT9.GT6HcjpfJD3NrBezaCEMQ_DRnz1bXYWA6kdk_UHo4; mp_15c0cd079bcfa80cd935f3a1b8606b48_mixpanel=%7B%22distinct_id%22%3A%20%22vintorew%22%2C%22%24device_id%22%3A%20%22198fb420eff385-002954d797949e8-26011151-4b9600-198fb420f01767%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%2C%22%24user_id%22%3A%20%22vintorew%22%7D; _mastodon_session=dz4ZH%2BjwhsdINo6GYrVecdvOJUYiGmsMK7H48O57XPABDWjRRGErakdcMRMDyfWqpZi8CdL7QJciYVX8eTDgW85tdCBsar0fe3aoiWPX080eTLkBIy0NXFgaOqODSq9lX2ti9UiDNeKEQ%2FhCDPgtYZxQ858efRjmsJBfwsKIW049Eiuv2Ae%2BBzFIIv%2FkEqBloz0mMr4L0XvwsWMSY6RtzOfrc9h%2FEOTLfTA0NxqXc87BvIwO1OdthAwCeEW8--z6x%2BElBVwPnWtynF--ehT195dfDxGalAFGbKrr7Q%3D%3D"
+            },
+            {
+              "name": "os",
+              "value": "Windows"
+            },
+            {
+              "name": "priority",
+              "value": "u=1, i"
+            },
+            {
+              "name": "referer",
+              "value": "https://truthsocial.com/@RyanAFournier/posts/115120661828101213"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": " \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-origin"
+            },
+            {
+              "name": "sentry-trace",
+              "value": " 56bd70e06f934b6cbe7a849fb68fb066-a79c5d44b343cb91"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -480,
+        32
+      ],
+      "id": "6db8fbf4-b07d-441c-a112-9e2ec738945a",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "FLNAhWLx6bbr7tim",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "KD3lRSetut0FoKWC",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/KD3lRSetut0FoKWC",
+          "cachedResultName": "Analyzer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.message.content }}",
+            "url": "={{ $('Merge').item.json.link }}"
+          },
+          "matchingColumns": [
+            "content"
+          ],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        -64
+      ],
+      "id": "cf1d383c-50ab-4922-935d-0ef987a6e31b",
+      "name": "Analyze content"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.4-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-5.4-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Bitte bereinige die Eingabe. Wandle diese in Markdown um. Danke",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        176,
+        -64
+      ],
+      "id": "fd0fd6ca-c836-439e-867a-f66960b7bd27",
+      "name": "Clean text",
+      "credentials": {
+        "openAiApi": {
+          "id": "lECHUsUdRrYTLJSz",
+          "name": "OpenAI: n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fc493fbc-31f4-4364-bc50-e04d39eb056a",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -272,
+        -160
+      ],
+      "id": "5da719a7-b705-4e25-a3d6-ec29fe19b0ab",
+      "name": "content exists"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Receive Trump post (Truth Social)": {
+      "main": [
+        [
+          {
+            "node": "content exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Clean text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Clean text": {
+      "main": [
+        [
+          {
+            "node": "Analyze content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "content exists": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "dIL3KF4vbuXzcuxU"
+  },
+  "versionId": "c5b0b58f-ea73-4456-921b-12d6f991ffa2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "rZp4cWxYNPj5R4eu",
+  "tags": [
+    {
+      "createdAt": "2025-08-30T14:14:14.948Z",
+      "updatedAt": "2025-08-30T14:14:14.948Z",
+      "id": "igc6zJAsaXLGpcFS",
+      "name": "trading"
+    },
+    {
+      "createdAt": "2025-05-02T10:44:46.218Z",
+      "updatedAt": "2025-05-02T10:44:46.218Z",
+      "id": "EV23fsrQOkvOlSZW",
+      "name": "agent"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "name": "Analyze news (the-decoder)",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "feedUrl": "https://the-decoder.com/feed/"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "bc096151-e607-487f-a267-56f2b00a56ae",
+      "name": "Receive news"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "KD3lRSetut0FoKWC",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/KD3lRSetut0FoKWC",
+          "cachedResultName": "Analyzer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.content }}",
+            "url": "={{ $json.link }}"
+          },
+          "matchingColumns": [
+            "content"
+          ],
+          "schema": [
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        -160
+      ],
+      "id": "2c62019c-3ec5-48a5-a2b7-777f656cc1d7",
+      "name": "Analyze content"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Receive news": {
+      "main": [
+        [
+          {
+            "node": "Analyze content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "165ced31-a0ba-43c3-a722-d4da9bb954af",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9852de35e1239bb5b98c5740ce8e8718865ec2b8b54e83cb5c84071d98c01200"
+  },
+  "id": "WkUjARyGYGGhf9e1",
+  "tags": [
+    {
+      "createdAt": "2025-05-02T10:44:46.218Z",
+      "updatedAt": "2025-05-02T10:44:46.218Z",
+      "id": "EV23fsrQOkvOlSZW",
+      "name": "agent"
+    },
+    {
+      "createdAt": "2025-08-30T14:14:14.948Z",
+      "updatedAt": "2025-08-30T14:14:14.948Z",
+      "id": "igc6zJAsaXLGpcFS",
+      "name": "trading"
+    }
+  ]
+}
